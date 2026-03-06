@@ -1,0 +1,9 @@
+{
+  "stt_backend": "google",
+  "city": "London",
+  "openweather_api_key": "YOUR_KEY",
+  "smtp_sender": "you@example.com",
+  "smtp_password": "app-password",
+  "smtp_recipient": "recipient@example.com",
+  "smtp_server": "smtp.gmail.com"
+}
