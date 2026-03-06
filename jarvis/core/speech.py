@@ -23,12 +23,19 @@ class SpeechService:
         preferred = None
         for voice in voices:
             descriptor = f"{voice.name} {voice.id}".lower()
-            if "male" in descriptor and ("brit" in descriptor or "en-gb" in descriptor or "russian" in descriptor or "ru" in descriptor):
+codex/create-modular-voice-assistant-jarvis-0b32yk
+            if "male" in descriptor and (
+                "russian" in descriptor
+                or "ru" in descriptor
+                or "brit" in descriptor
+                or "en-gb" in descriptor
+            ):
                 preferred = voice.id
                 break
         if preferred:
             self.engine.setProperty("voice", preferred)
-        self.engine.setProperty("rate", 178)
+codex/create-modular-voice-assistant-jarvis-0b32yk
+        self.engine.setProperty("rate", 176)
 
     def speak(self, text: str) -> None:
         logger.info("TTS: %s", text)
@@ -37,9 +44,16 @@ class SpeechService:
 
     def transcribe(self, audio: sr.AudioData) -> str:
         if self.stt_backend == "azure":
-            # Expected environment vars for Azure speech key and region.
-            return self.recognizer.recognize_azure(audio)
-        return self.recognizer.recognize_google(audio, language="en-US")
+codex/create-modular-voice-assistant-jarvis-0b32yk
+            try:
+                return self.recognizer.recognize_azure(audio, language="ru-RU")
+            except Exception:  # noqa: BLE001
+                return self.recognizer.recognize_azure(audio, language="en-US")
+
+        try:
+            return self.recognizer.recognize_google(audio, language="ru-RU")
+        except sr.UnknownValueError:
+            return self.recognizer.recognize_google(audio, language="en-US")
 
 
 class BackgroundListener:
@@ -66,7 +80,8 @@ class BackgroundListener:
         while not self._stop_event.is_set():
             try:
                 with self.speech.mic as source:
-                    audio = self.speech.recognizer.listen(source, timeout=1, phrase_time_limit=5)
+codex/create-modular-voice-assistant-jarvis-0b32yk
+                    audio = self.speech.recognizer.listen(source, timeout=1, phrase_time_limit=6)
                 text = self.speech.transcribe(audio).strip()
                 if text:
                     logger.info("STT: %s", text)
@@ -74,7 +89,8 @@ class BackgroundListener:
             except sr.WaitTimeoutError:
                 continue
             except sr.UnknownValueError:
-                logger.info("Speech not understood")
+codex/create-modular-voice-assistant-jarvis-0b32yk
+                logger.info("Речь не распознана")
             except Exception as exc:  # noqa: BLE001
-                logger.exception("Listener error: %s", exc)
+                logger.exception("Ошибка фонового слушателя: %s", exc)
                 time.sleep(0.4)

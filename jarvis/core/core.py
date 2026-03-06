@@ -43,12 +43,14 @@ class Core:
         self.speech.speak(text)
 
     def confirm(self, prompt: str) -> bool:
-        self.speak(f"{prompt}. Say yes to continue.")
+codex/create-modular-voice-assistant-jarvis-0b32yk
+        self.speak(f"{prompt}. Скажите 'да', чтобы продолжить, сэр."
         return True
 
     def start(self) -> None:
         self._running.set()
-        self.speak("JARVIS online.")
+codex/create-modular-voice-assistant-jarvis-0b32yk
+        self.speak("JARVIS активирован и готов к работе, сэр.")
         self.listener.start()
         try:
             while self._running.is_set():
@@ -61,24 +63,28 @@ class Core:
 
     def override(self) -> None:
         self._cancel.set()
-        self.speak("Override accepted. Stopping current operations.")
+codex/create-modular-voice-assistant-jarvis-0b32yk
+        self.speak("Протокол Override принят. Останавливаю текущие задачи, сэр.")
 
     def process_transcript(self, transcript: str) -> None:
         text = transcript.lower().strip()
-        if self.OVERRIDE_PHRASE in text:
+        if self.OVERRIDE_PHRASE in text or "джарвис отмена" in text or "джарвис стоп" in text:
             self.override()
             return
 
         self._cancel.clear()
         cmd, score, alias = self.registry.match(text)
         if not cmd:
-            logger.info("No command match for '%s' (score=%s)", transcript, score)
+codex/create-modular-voice-assistant-jarvis-0b32yk
+            logger.info("Команда не распознана: '%s' (score=%s)", transcript, score)
             return
 
         if self._cancel.is_set():
             return
 
-        logger.info("Matched '%s' with alias '%s' (%s%%)", cmd.name, alias, score)
+codex/create-modular-voice-assistant-jarvis-0b32yk
+        logger.info("Совпадение '%s' с алиасом '%s' (%s%%)", cmd.name, alias, score)
+
         with self._exec_lock:
             if self._cancel.is_set():
                 return
