@@ -6,6 +6,7 @@ from jarvis.utils.logging_utils import action_guard
 MODULE = "Yandex Music"
 
 
+codex/create-modular-voice-assistant-jarvis-0b32yk
 def aliases(ru: list[str], en: list[str]) -> list[str]:
     return ru + en
 
@@ -19,23 +20,30 @@ def play_pause(*, core, transcript: str) -> None:
 @action_guard(MODULE)
 def next_track(*, core, transcript: str) -> None:
     act.press("nexttrack")
+codex/create-modular-voice-assistant-jarvis-0b32yk
     core.speak("Включаю следующий трек, сэр.")
+
 
 
 @action_guard(MODULE)
 def prev_track(*, core, transcript: str) -> None:
     act.press("prevtrack")
+codex/create-modular-voice-assistant-jarvis-0b32yk
     core.speak("Возвращаю предыдущий трек, сэр.")
+
 
 
 @action_guard(MODULE)
 def like_track(*, core, transcript: str) -> None:
     act.press("l")
+codex/create-modular-voice-assistant-jarvis-0b32yk
     core.speak("Ставлю лайк композиции, сэр.")
+
 
 
 @action_guard(MODULE)
 def search_track(*, core, transcript: str) -> None:
+codex/create-modular-voice-assistant-jarvis-0b32yk
     query = (
         transcript.lower()
         .replace("найди", "")
@@ -54,6 +62,7 @@ def search_track(*, core, transcript: str) -> None:
 @action_guard(MODULE)
 def open_daily_mix(*, core, transcript: str) -> None:
     act.open_url("https://music.yandex.ru/home")
+codex/create-modular-voice-assistant-jarvis-0b32yk
     core.speak("Открываю ваш Daily Mix, сэр.")
 
 

@@ -14,6 +14,7 @@ from jarvis.utils.logging_utils import action_guard
 MODULE = "Internet & Work"
 
 
+codex/create-modular-voice-assistant-jarvis-0b32yk
 def aliases(ru: list[str], en: list[str]) -> list[str]:
     return ru + en
 
@@ -27,6 +28,7 @@ def google_search(*, core, transcript: str) -> None:
 
 @action_guard(MODULE)
 def wiki_search(*, core, transcript: str) -> None:
+codex/create-modular-voice-assistant-jarvis-0b32yk
     q = transcript.replace("википедия", "").replace("wiki", "").strip() or "искусственный интеллект"
     act.open_url(f"https://ru.wikipedia.org/w/index.php?search={q.replace(' ', '+')}")
     core.speak("Открываю результаты Википедии, сэр.")
@@ -34,6 +36,7 @@ def wiki_search(*, core, transcript: str) -> None:
 
 @action_guard(MODULE)
 def youtube_search(*, core, transcript: str) -> None:
+codex/create-modular-voice-assistant-jarvis-0b32yk
     q = transcript.replace("ютуб", "").replace("youtube", "").replace("поиск", "").strip() or "lofi"
     act.open_url(f"https://www.youtube.com/results?search_query={q.replace(' ', '+')}")
     core.speak(f"Ищу видео на YouTube: {q}, сэр.")
@@ -43,6 +46,7 @@ def youtube_search(*, core, transcript: str) -> None:
 def create_docx(*, core, transcript: str) -> None:
     target = Path.home() / "Documents" / f"jarvis_{datetime.now():%Y%m%d_%H%M%S}.docx"
     doc = Document()
+codex/create-modular-voice-assistant-jarvis-0b32yk
     doc.add_heading("Документ JARVIS", level=1)
     doc.add_paragraph("Создано по голосовой команде.")
     doc.save(target)
@@ -52,6 +56,7 @@ def create_docx(*, core, transcript: str) -> None:
 @action_guard(MODULE)
 def create_xlsx(*, core, transcript: str) -> None:
     target = Path.home() / "Documents" / f"jarvis_{datetime.now():%Y%m%d_%H%M%S}.xlsx"
+codex/create-modular-voice-assistant-jarvis-0b32yk
     pd.DataFrame([{"задача": "создано jarvis", "время": datetime.now().isoformat()}]).to_excel(target, index=False)
     core.speak(f"Таблица создана: {target.name}, сэр.")
 
@@ -63,11 +68,13 @@ def send_email(*, core, transcript: str) -> None:
     recipient = core.config.get("smtp_recipient")
     server = core.config.get("smtp_server", "smtp.gmail.com")
     if not all([sender, password, recipient]):
+codex/create-modular-voice-assistant-jarvis-0b32yk
         core.speak("Сэр, SMTP-настройки не заполнены.")
         return
     msg = EmailMessage()
     msg["From"] = sender
     msg["To"] = recipient
+codex/create-modular-voice-assistant-jarvis-0b32yk
     msg["Subject"] = "Сообщение от JARVIS"
     msg.set_content("Письмо отправлено голосовой командой JARVIS.")
     with smtplib.SMTP_SSL(server, 465) as smtp:

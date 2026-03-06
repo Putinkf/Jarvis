@@ -9,6 +9,7 @@ from jarvis.utils.logging_utils import action_guard
 MODULE = "System & Hardware"
 
 
+codex/create-modular-voice-assistant-jarvis-0b32yk
 def aliases(ru: list[str], en: list[str]) -> list[str]:
     return ru + en
 
@@ -22,28 +23,33 @@ def open_task_manager(*, core, transcript: str) -> None:
 @action_guard(MODULE)
 def lock_pc(*, core, transcript: str) -> None:
     act.lock_screen()
+codex/create-modular-voice-assistant-jarvis-0b32yk
     core.speak("Блокирую рабочую станцию, сэр.")
 
 
 @action_guard(MODULE)
 def clean_trash(*, core, transcript: str) -> None:
     os.system("powershell -Command Clear-RecycleBin -Force")
+codex/create-modular-voice-assistant-jarvis-0b32yk
     core.speak("Корзина очищена, сэр.")
 
 
 @action_guard(MODULE)
 def launch_notepad(*, core, transcript: str) -> None:
     act.launch("notepad")
+codex/create-modular-voice-assistant-jarvis-0b32yk
     core.speak("Открываю блокнот, сэр.")
 
 
 @action_guard(MODULE)
 def report_health(*, core, transcript: str) -> None:
+codex/create-modular-voice-assistant-jarvis-0b32yk
     core.speak(f"Сэр, {act.cpu_ram_report()} {act.battery_report()}")
 
 
 @action_guard(MODULE)
 def shutdown_pc(*, core, transcript: str) -> None:
+codex/create-modular-voice-assistant-jarvis-0b32yk
     if core.confirm("Подтвердите выключение"):
         os.system("shutdown /s /t 10")
         core.speak("Выключение через 10 секунд, сэр.")
@@ -51,6 +57,7 @@ def shutdown_pc(*, core, transcript: str) -> None:
 
 @action_guard(MODULE)
 def restart_pc(*, core, transcript: str) -> None:
+codex/create-modular-voice-assistant-jarvis-0b32yk
     if core.confirm("Подтвердите перезагрузку"):
         os.system("shutdown /r /t 10")
         core.speak("Перезагрузка через 10 секунд, сэр.")
@@ -59,6 +66,7 @@ def restart_pc(*, core, transcript: str) -> None:
 @action_guard(MODULE)
 def sleep_pc(*, core, transcript: str) -> None:
     os.system("rundll32.exe powrprof.dll,SetSuspendState 0,1,0")
+codex/create-modular-voice-assistant-jarvis-0b32yk
     core.speak("Перевожу систему в сон, сэр.")
 
 
@@ -72,6 +80,7 @@ def sort_downloads(*, core, transcript: str) -> None:
         target = down / ext
         target.mkdir(exist_ok=True)
         item.rename(target / item.name)
+codex/create-modular-voice-assistant-jarvis-0b32yk
     core.speak("Папка загрузок отсортирована, сэр.")
 
 
