@@ -12,9 +12,9 @@ from jarvis.utils.logging_utils import action_guard
 MODULE = "Utilities & Lifestyle"
 
 
-codex/create-modular-voice-assistant-jarvis-0b32yk
 def aliases(ru: list[str], en: list[str]) -> list[str]:
     return ru + en
+
 
 def _extract_number(text: str, default: int = 5) -> int:
     for token in text.split():
@@ -26,7 +26,6 @@ def _extract_number(text: str, default: int = 5) -> int:
 @action_guard(MODULE)
 def weather(*, core, transcript: str) -> None:
     api_key = core.config.get("openweather_api_key")
-codex/create-modular-voice-assistant-jarvis-0b32yk
     city = core.config.get("city", "Moscow")
     if not api_key:
         core.speak("Сэр, ключ OpenWeather не задан.")
@@ -44,7 +43,6 @@ codex/create-modular-voice-assistant-jarvis-0b32yk
 
 @action_guard(MODULE)
 def crypto(*, core, transcript: str) -> None:
-codex/create-modular-voice-assistant-jarvis-0b32yk
     coin = "bitcoin" if "биткоин" in transcript.lower() or "bitcoin" in transcript.lower() else "ethereum"
     r = requests.get(
         "https://api.coingecko.com/api/v3/simple/price",
@@ -59,10 +57,8 @@ codex/create-modular-voice-assistant-jarvis-0b32yk
 def currency(*, core, transcript: str) -> None:
     r = requests.get("https://open.er-api.com/v6/latest/USD", timeout=10)
     eur = r.json()["rates"]["EUR"]
-codex/create-modular-voice-assistant-jarvis-0b32yk
     rub = r.json()["rates"]["RUB"]
     core.speak(f"Сэр, один доллар равен {eur:.2f} евро и {rub:.2f} рубля.")
-
 
 
 @action_guard(MODULE)
@@ -70,7 +66,6 @@ def set_timer(*, core, transcript: str) -> None:
     seconds = _extract_number(transcript, default=10)
 
     def _alarm() -> None:
-codex/create-modular-voice-assistant-jarvis-0b32yk
         core.speak(f"Сэр, таймер завершён. Прошло {seconds} секунд.")
 
     threading.Timer(seconds, _alarm).start()
@@ -79,49 +74,38 @@ codex/create-modular-voice-assistant-jarvis-0b32yk
 
 @action_guard(MODULE)
 def alarm(*, core, transcript: str) -> None:
-codex/create-modular-voice-assistant-jarvis-0b32yk
     core.speak("Сэр, будильник отмечен. Для точного времени используйте планировщик задач.")
-
 
 
 @action_guard(MODULE)
 def daily_news(*, core, transcript: str) -> None:
-codex/create-modular-voice-assistant-jarvis-0b32yk
     act.open_url("https://lenta.ru")
     core.speak("Открываю ежедневную новостную сводку, сэр.")
-
 
 
 @action_guard(MODULE)
 def take_note(*, core, transcript: str) -> None:
     stamp = datetime.now().strftime("note_%Y%m%d_%H%M%S")
-codex/create-modular-voice-assistant-jarvis-0b32yk
     note = transcript.replace("заметка", "").replace("take note", "").strip() or "Голосовая заметка"
     path = act.create_note(stamp, note)
     core.speak(f"Сэр, заметка сохранена: {path.name}.")
 
 
-
 @action_guard(MODULE)
 def system_time(*, core, transcript: str) -> None:
-codex/create-modular-voice-assistant-jarvis-0b32yk
     core.speak(datetime.now().strftime("Сэр, текущее время %H:%M"))
-
 
 
 @action_guard(MODULE)
 def stopwatch(*, core, transcript: str) -> None:
-codex/create-modular-voice-assistant-jarvis-0b32yk
     core.runtime["stopwatch_start"] = time.time()
     core.speak("Сэр, секундомер запущен.")
-
 
 
 @action_guard(MODULE)
 def stopwatch_stop(*, core, transcript: str) -> None:
     start = core.runtime.get("stopwatch_start")
     if not start:
-codex/create-modular-voice-assistant-jarvis-0b32yk
         core.speak("Сэр, секундомер ещё не был запущен.")
         return
     elapsed = time.time() - start

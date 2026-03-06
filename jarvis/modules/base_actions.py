@@ -39,15 +39,15 @@ def open_url(url: str) -> None:
 def battery_report() -> str:
     battery = psutil.sensors_battery()
     if not battery:
-        return "Battery info unavailable"
-    state = "charging" if battery.power_plugged else "discharging"
-    return f"Battery {battery.percent:.0f}% and {state}."
+        return "данные по батарее недоступны"
+    state = "подключено к питанию" if battery.power_plugged else "работает от батареи"
+    return f"заряд батареи {battery.percent:.0f}%, состояние: {state}."
 
 
 def cpu_ram_report() -> str:
     cpu = psutil.cpu_percent(interval=0.2)
     mem = psutil.virtual_memory().percent
-    return f"CPU {cpu:.0f}% and RAM {mem:.0f}%."
+    return f"загрузка процессора {cpu:.0f}%, память {mem:.0f}%."
 
 
 def lock_screen() -> None:

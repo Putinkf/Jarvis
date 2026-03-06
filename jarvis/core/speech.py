@@ -23,7 +23,6 @@ class SpeechService:
         preferred = None
         for voice in voices:
             descriptor = f"{voice.name} {voice.id}".lower()
-codex/create-modular-voice-assistant-jarvis-0b32yk
             if "male" in descriptor and (
                 "russian" in descriptor
                 or "ru" in descriptor
@@ -34,7 +33,6 @@ codex/create-modular-voice-assistant-jarvis-0b32yk
                 break
         if preferred:
             self.engine.setProperty("voice", preferred)
-codex/create-modular-voice-assistant-jarvis-0b32yk
         self.engine.setProperty("rate", 176)
 
     def speak(self, text: str) -> None:
@@ -44,7 +42,6 @@ codex/create-modular-voice-assistant-jarvis-0b32yk
 
     def transcribe(self, audio: sr.AudioData) -> str:
         if self.stt_backend == "azure":
-codex/create-modular-voice-assistant-jarvis-0b32yk
             try:
                 return self.recognizer.recognize_azure(audio, language="ru-RU")
             except Exception:  # noqa: BLE001
@@ -80,7 +77,6 @@ class BackgroundListener:
         while not self._stop_event.is_set():
             try:
                 with self.speech.mic as source:
-codex/create-modular-voice-assistant-jarvis-0b32yk
                     audio = self.speech.recognizer.listen(source, timeout=1, phrase_time_limit=6)
                 text = self.speech.transcribe(audio).strip()
                 if text:
@@ -89,7 +85,6 @@ codex/create-modular-voice-assistant-jarvis-0b32yk
             except sr.WaitTimeoutError:
                 continue
             except sr.UnknownValueError:
-codex/create-modular-voice-assistant-jarvis-0b32yk
                 logger.info("Речь не распознана")
             except Exception as exc:  # noqa: BLE001
                 logger.exception("Ошибка фонового слушателя: %s", exc)

@@ -43,13 +43,11 @@ class Core:
         self.speech.speak(text)
 
     def confirm(self, prompt: str) -> bool:
-codex/create-modular-voice-assistant-jarvis-0b32yk
-        self.speak(f"{prompt}. Скажите 'да', чтобы продолжить, сэр."
+        self.speak(f"{prompt}. Скажите 'да', чтобы продолжить, сэр.")
         return True
 
     def start(self) -> None:
         self._running.set()
-codex/create-modular-voice-assistant-jarvis-0b32yk
         self.speak("JARVIS активирован и готов к работе, сэр.")
         self.listener.start()
         try:
@@ -63,7 +61,6 @@ codex/create-modular-voice-assistant-jarvis-0b32yk
 
     def override(self) -> None:
         self._cancel.set()
-codex/create-modular-voice-assistant-jarvis-0b32yk
         self.speak("Протокол Override принят. Останавливаю текущие задачи, сэр.")
 
     def process_transcript(self, transcript: str) -> None:
@@ -75,16 +72,13 @@ codex/create-modular-voice-assistant-jarvis-0b32yk
         self._cancel.clear()
         cmd, score, alias = self.registry.match(text)
         if not cmd:
-codex/create-modular-voice-assistant-jarvis-0b32yk
             logger.info("Команда не распознана: '%s' (score=%s)", transcript, score)
             return
 
         if self._cancel.is_set():
             return
 
-codex/create-modular-voice-assistant-jarvis-0b32yk
         logger.info("Совпадение '%s' с алиасом '%s' (%s%%)", cmd.name, alias, score)
-
         with self._exec_lock:
             if self._cancel.is_set():
                 return
